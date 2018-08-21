@@ -1,70 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <title>Mic Check</title>
-</head>
-<body>
-  <video></video>
-  <div id="message"></div>
-  <script type="text/javascript">
-    var constraints = {
-      audio: true,
-      video: {
-        width: 1280,
-        height: 720
-      }
-    }; 
-    
-    // Older browsers might not implement mediaDevices at all, so we set an empty object first
-    if (navigator.mediaDevices === undefined) {
-      navigator.mediaDevices = {};
-    }
-    
-    // Some browsers partially implement mediaDevices. We can't just assign an object
-    // with getUserMedia as it would overwrite existing properties.
-    // Here, we will just add the getUserMedia property if it's missing.
-    if (navigator.mediaDevices.getUserMedia === undefined) {
-      navigator.mediaDevices.getUserMedia = function(constraints) {
-    
-        // First get ahold of the legacy getUserMedia, if present
-        var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-    
-        // Some browsers just don't implement it - return a rejected promise with an error
-        // to keep a consistent interface
-        if (!getUserMedia) {
-          return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
-        }
-    
-        // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
-        return new Promise(function(resolve, reject) {
-          getUserMedia.call(navigator, constraints, resolve, reject);
-        });
-      }
-    }
-    
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-      .then(function(stream) {
-        var video = document.querySelector('video');
-
-        // Older browsers may not have srcObject
-        if ("srcObject" in video) {
-          video.srcObject = stream;
-        }
-        else {
-          // Avoid using this in new browsers, as it is going away.
-          video.src = window.URL.createObjectURL(stream);
-        }
-        video.onloadedmetadata = function(e) {
-          video.play();
-        };
-      })
-      .catch(function(err) {
-        document.getElementById('message').innerText = err.name + ": " + err.message;
-      });
-
-  </script>
-</body>
-</html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Keith Richards - Software Developer in Durham, NC</title><link rel="stylesheet" href="/stylesheets/style.css"><base href="https://dkrichards.com/"><link rel="canonical" href="http://dkrichards.com"><link rel="icon" type="image/png" href="/favicon.png"><link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet"><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"><meta name="theme-color" content="#0288D1"/><meta name="msapplication-navbutton-color" content="#0288D1"/><meta name="apple-mobile-web-app-status-bar-style" content="#0288D1"/><meta name="ICBM" content="35.994033, -78.898619"/><meta name="geo.position" content="35.994033;-78.898619"/><meta name="geo.region" content="US-NC"/><meta name="geo.placename" content="Durham"/><meta name="google-site-verification" content="fnpgLVltsohkYzvnefmzpg2HmxFbP_88Nak73roWUZs"/><meta name="robots" content="NOODP"/><meta name="description" content="Check out the portfolio of Durham, NC based software developer and consummate bro, Keith Richards."/><meta name="twitter:card" content="summary"/><meta name="twitter:site" content="@dkrichards86"/><meta name="twitter:title" content="Keith Richards - Software Developer in Durham, NC"/><meta name="twitter:description" content="Check out the portfolio of Durham, NC based software developer and consummate bro, Keith Richards."/><meta name="twitter:image" content="https://dkrichards.com/images/pirate.jpg"/><script type="application/ld+json">{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "name": "Keith Richards",
+  "description": "Software developer in Durham, NC",
+  "email": "mailto:dkrichards86@gmail.com",
+  "telephone": "(570) 956-0236",
+  "image": "https://dkrichards.com/pirate_min.jpg",
+  "url": "https://dkrichards.com",
+  "worksFor": "RTI International",
+  "jobTitle": "Software Developer",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Durham",
+    "addressRegion": "NC",
+    "postalCode": "27713"
+  },
+  "sameAs": [
+    "https://github.com/dkrichards86",
+    "https://twitter.com/dkrichards86",
+    "https://www.linkedin.com/in/dkrichards/",
+    "https://www.rti.org/expert/keith-richards"
+  ]
+}
+</script></head><body>
+<video></video>
+<script src="./miccheck.js"></script>
+</body></html>
